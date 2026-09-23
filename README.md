@@ -11,19 +11,19 @@ Each subsequent version represents a more optimized or refactored approach compa
 
 Here is a brief description of each problem included in this repository:
 
-- **and_xor_or**: Maximize the bitwise expression `(((M1 & M2) ^ (M1 | M2)) & (M1 ^ M2))` for any subsegment, where M1 and M2 are the smallest and second smallest elements.
-- **cube_summation**: Perform update and query operations to calculate the sum of values within a specific block of a 3D matrix.
-- **get_cost**: Find the minimum cost to reach a destination node in a weighted graph using Dijkstra's algorithm.
-- **is_balanced**: Determine whether a sequence of brackets (e.g., `{}`, `()`, `[]`) is properly nested and balanced using a stack data structure.
-- **largestRectangle**: Find the largest rectangular area possible within a given histogram (an array of building heights).
-- **level_order_traversal**: Perform a level-order traversal (Breadth-First Search) to print the nodes of a binary tree.
-- **mini_max_sum**: Calculate the minimum and maximum possible sums by choosing exactly four out of five given integers.
-- **minimum_distance**: Find the minimum distance (index difference) between two equal elements in an array.
-- **minimum_moves**: Find the minimum number of moves to reach a target cell in a grid while navigating around obstacles.
-- **poisonous_plants**: Calculate the number of days it takes until no more plants die, given a rule that a plant dies if it has more pesticide than the plant to its left.
-- **rotate_left**: Perform a specified number of left rotations on a given array.
-- **sherlock_and_anagrams**: Find the number of pairs of substrings of a string that are anagrams of each other.
-- **simple_array_sum**: Calculate the sum of all elements in a given array.
+1. **and_xor_or**: Maximize the bitwise expression `(((M1 & M2) ^ (M1 | M2)) & (M1 ^ M2))` for any subsegment, where M1 and M2 are the smallest and second smallest elements.
+2. **cube_summation**: Perform update and query operations to calculate the sum of values within a specific block of a 3D matrix.
+3. **get_cost**: Find the minimum cost to reach a destination node in a weighted graph using Dijkstra's algorithm.
+4. **is_balanced**: Determine whether a sequence of brackets (e.g., `{}`, `()`, `[]`) is properly nested and balanced using a stack data structure.
+5. **largestRectangle**: Find the largest rectangular area possible within a given histogram (an array of building heights).
+6. **level_order_traversal**: Perform a level-order traversal (Breadth-First Search) to print the nodes of a binary tree.
+7. **mini_max_sum**: Calculate the minimum and maximum possible sums by choosing exactly four out of five given integers.
+8. **minimum_distance**: Find the minimum distance (index difference) between two equal elements in an array.
+9. **minimum_moves**: Find the minimum number of moves to reach a target cell in a grid while navigating around obstacles.
+10. **poisonous_plants**: Calculate the number of days it takes until no more plants die, given a rule that a plant dies if it has more pesticide than the plant to its left.
+11. **rotate_left**: Perform a specified number of left rotations on a given array.
+12. **sherlock_and_anagrams**: Find the number of pairs of substrings of a string that are anagrams of each other.
+13. **simple_array_sum**: Calculate the sum of all elements in a given array.
 
 ## Running Instructions
 
