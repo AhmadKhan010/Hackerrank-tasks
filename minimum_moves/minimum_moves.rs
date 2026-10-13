@@ -16,30 +16,36 @@ use std::collections::VecDeque;
  */
 
 fn minimumMoves(grid: &[String], startX: i32, startY: i32, goalX: i32, goalY: i32) -> i32 {
-    let n = grid.len() ;
+    let grid_size = grid.len() ;
     
     let mut queue: VecDeque<(i32, i32, i32)> = VecDeque::new() ;
     
-    let mut visited = vec![vec![false; n]; n] ;
+    let mut visited = vec![vec![false; grid_size]; grid_size] ;
     
     queue.push_back((startX, startY, 0));
     visited[startX as usize][startY as usize] = true ;
     
     let possible_directions = [(-1,0), (1,0), (0,1), (0,-1)] ;
     
+    let mut curr_X: i32;
+    let mut curr_Y: i32;
+    let mut moves: i32;
+    let mut next_X: i32;
+    let mut next_Y: i32;
+    
     while !queue.is_empty(){  
         
-        let (curr_X, curr_Y, moves) = queue.pop_front().unwrap() ;
+        (curr_X, curr_Y, moves) = queue.pop_front().unwrap() ;
         
         if curr_X == goalX && curr_Y == goalY {
             return moves;
         }
         
-        for (x,y) in possible_directions {
-            let mut next_X = curr_X + x ;
-            let mut next_Y = curr_Y + y ;
+        for (delta_x, delta_y) in possible_directions {
+            next_X = curr_X + delta_x ;
+            next_Y = curr_Y + delta_y ;
             
-            while next_X >=0 && next_X < (n as i32) && next_Y >= 0 && next_Y < (n as i32) && grid[next_X as usize].as_bytes()[next_Y as usize] != b'X' {
+            while next_X >=0 && next_X < (grid_size as i32) && next_Y >= 0 && next_Y < (grid_size as i32) && grid[next_X as usize].as_bytes()[next_Y as usize] != b'X' {
                 
                 if !visited[next_X as usize][next_Y as usize] {
                     visited[next_X as usize][next_Y as usize] = true ;
@@ -47,8 +53,8 @@ fn minimumMoves(grid: &[String], startX: i32, startY: i32, goalX: i32, goalY: i3
                     queue.push_back((next_X, next_Y, moves+1));
                 }
                 
-                next_X += x ;
-                next_Y += y ;
+                next_X += delta_x ;
+                next_Y += delta_y ;
                 
             }
         }

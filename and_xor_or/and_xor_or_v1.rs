@@ -12,40 +12,40 @@ use std::io::{self, BufRead, Write};
 
  // 1) a naive approach in which many test cases are passing but some are failing due to time limit constraint,
  //  this O(N^2) time complexity solution
-fn andXorOr(a: &[i32]) -> i32 {
+fn andXorOr(numbers: &[i32]) -> i32 {
     
-    let length = a.len() ;
+    let length = numbers.len() ;
 
-    let mut result = 0 ;
+    let mut max_result = 0 ;
     
-    for i in 0..length {
-        let mut min1 = a[i];
-        let mut min2 = i32::MAX ;
+    for start_index in 0..length {
+        let mut smallest = numbers[start_index];
+        let mut second_smallest = i32::MAX ;
         
-        for j in (i+1)..length {
-            let j_current_value = a[j] ;
+        for end_index in (start_index+1)..length {
+            let current_value = numbers[end_index] ;
             
-            if j_current_value < min1 {
-                min2 = min1 ;
-                min1=j_current_value;
+            if current_value < smallest {
+                second_smallest = smallest ;
+                smallest=current_value;
             }
-            else if j_current_value < min2 && j_current_value >min1 {
-                min2 = j_current_value ;   
+            else if current_value < second_smallest && current_value > smallest {
+                second_smallest = current_value ;   
             } 
             
-            let first_and = min1 & min2 ;
-            let first_or = min1 | min2 ;
-            let first_xor = first_and ^ first_or ;
-            let second_xor = min1 ^ min2;
-            let last_and = first_xor & second_xor ;
+            let bitwise_and = smallest & second_smallest ;
+            let bitwise_or = smallest | second_smallest ;
+            let xor_of_and_or = bitwise_and ^ bitwise_or ;
+            let bitwise_xor = smallest ^ second_smallest;
+            let current_expression_value = xor_of_and_or & bitwise_xor ;
             
-            if last_and > result {
-                result = last_and;
+            if current_expression_value > max_result {
+                max_result = current_expression_value;
             }
         }
     }
     
-    return result ;
+    return max_result ;
 }
 
 fn main() {

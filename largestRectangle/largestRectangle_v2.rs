@@ -10,33 +10,40 @@ use std::io::{self, BufRead, Write};
  */
 
 // 2) a more optimized approach in which the test cases are passing in the specific time limit and no time constraint occur on any test case.
-fn largestRectangle(h: &[i32]) -> i64 {
-    let length = h.len() ;
-    let mut result: i64 = 0 ;
+
+fn largestRectangle(heights: &[i32]) -> i64 {
+    let length = heights.len() ;
+    let mut max_area: i64 = 0 ;
     
-    for i in 0..length {
-        let current_value = h[i] ;
-        let mut left_largest_index = i as i32;
+    let mut current_height: i32;
+    let mut left_bound_index: i32;
+    let mut right_bound_index: usize;
+    let mut count_of_buildings: i32;
+    let mut area: i64;
+    
+    for current_index in 0..length {
+        current_height = heights[current_index] ;
+        left_bound_index = (current_index - 1) as i32;
         
-        while left_largest_index >= 0 && h[left_largest_index as usize] >=current_value {
-            left_largest_index -= 1 ;
+        while left_bound_index >= 0 && heights[left_bound_index as usize] >= current_height {
+            left_bound_index -= 1 ;
         }
         
-        let mut right_largest_index = i;
-        while right_largest_index < length && h[right_largest_index] >= current_value {
-            right_largest_index += 1 ;
+        right_bound_index = current_index +1 ;
+        while right_bound_index < length && heights[right_bound_index] >= current_height {
+            right_bound_index += 1 ;
         }
         
-        let count_of_buildings = right_largest_index as i32 - left_largest_index - 1 ;
+        count_of_buildings = right_bound_index as i32 - left_bound_index - 1 ;
         
-        let area: i64 = count_of_buildings as i64 * current_value as i64;
+        area = count_of_buildings as i64 * current_height as i64;
         
-        if area > result {
-            result = area;
+        if area > max_area {
+            max_area = area;
         }
     }
     
-    return result;
+    return max_area;
     
 }
 

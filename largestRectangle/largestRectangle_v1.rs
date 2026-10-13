@@ -10,33 +10,38 @@ use std::io::{self, BufRead, Write};
  */
 
  // 1) naive approach in which it runs on O(n^2) and most of the test cases are failing due to time limit constraint.
-fn largestRectangle(h: &[i32]) -> i64 {
-    let length = h.len();
-    let mut result: i64 = 0;
+fn largestRectangle(heights: &[i32]) -> i64 {
+    let length = heights.len();
+    let mut max_area: i64 = 0;
     
-    for i in 0..length {
-        let mut local_min = h[i];
+    let mut min_height: i32;
+    let mut current_area: i64;
+    let mut width: i32;
+    let mut height: i32;
+    
+    for start_index in 0..length {
+        min_height = heights[start_index];
         
-        let mut local_result: i64 = local_min as i64 * 1;
-        if local_result > result {
-            result = local_result;
+        current_area = min_height as i64;
+        if current_area > max_area {
+            max_area = current_area;
         }
         
-        let mut counter = 1;
-        for j in (i + 1)..length {
-            let value = h[j];
-            if value < local_min {
-                local_min = value;
+        width = 1;
+        for end_index in (start_index + 1)..length {
+            height = heights[end_index];
+            if height < min_height {
+                min_height = height;
             }
-            counter += 1;
+            width += 1;
             
-            local_result = local_min as i64 * counter as i64;
-            if local_result > result {
-                result = local_result;
+            current_area = min_height as i64 * width as i64;
+            if current_area > max_area {
+                max_area = current_area;
             }
         }
     }
-    return result;
+    return max_area;
 }
 
 

@@ -16,7 +16,6 @@ use std::cmp::Reverse ;
  * 3. An edge exists between <name>_from[i] and <name>_to[i]. The weight of the edge is <name>_weight[i].
  *
  */
-
 fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
     // Print your answer within the function and return nothing
     
@@ -27,18 +26,26 @@ fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
     // building graph first
     let mut graph: Vec<Vec<(i32, i32)>> = vec![Vec::new(); (g_nodes + 1) as usize] ;
     
-    for i in 0..g_from.len() {
-        let x = g_from[i] ;
-        let y = g_to[i] ;
-        let weight = g_weight[i] ;
+    let mut from_node: i32;
+    let mut to_node: i32;
+    let mut weight: i32;
+    
+    for edge_index in 0..g_from.len() {
+        from_node = g_from[edge_index] ;
+        to_node = g_to[edge_index] ;
+        weight = g_weight[edge_index] ;
         
         // because graph is bi directional
-        graph[x as usize].push((y,weight)) ;
-        graph[y as usize].push((x,weight)) ;
+        graph[from_node as usize].push((to_node, weight)) ;
+        graph[to_node as usize].push((from_node, weight)) ;
     }
     
     let mut minimum_cost: Vec<i32> = vec![i32::MAX; (g_nodes+1) as usize] ;
     minimum_cost[1] = 0 ;
+    
+    let mut difference: i32;
+    let mut additional_cost: i32;
+    let mut new_cost: i32;
     
     while let Some(Reverse((current_cost, current_node))) = priority_queue.pop() {
         
@@ -46,21 +53,18 @@ fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
             println!("{}", current_cost);
             return ;
         }
-        
-        // for optimization, we can remove it
-        if current_cost > minimum_cost[current_node as usize] {
-            continue ; 
-        }
-        
+       
         for &(neighbour, edge_weight) in &graph[current_node as usize] {
             
-            let difference = edge_weight - current_cost;
-            let mut additional_cost = 0 ;
+            difference = edge_weight - current_cost;
             if difference > 0 {
-                additional_cost = difference;
+                new_cost = current_cost + difference ;
+            }
+            else {
+                new_cost = current_cost ;
+
             }
             
-            let new_cost = current_cost + additional_cost ;
             
             if new_cost < minimum_cost[neighbour as usize] {
                 minimum_cost[neighbour as usize] = new_cost;

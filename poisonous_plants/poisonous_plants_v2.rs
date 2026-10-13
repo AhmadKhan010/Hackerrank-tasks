@@ -1,6 +1,7 @@
 use std::env;
 use std::fs::File;
 use std::io::{self, BufRead, Write};
+use std::mem::swap;
 
 /*
  * Complete the 'poisonousPlants' function below.
@@ -15,36 +16,37 @@ use std::io::{self, BufRead, Write};
 // the 99% plants to survivor vector every time which becomes an overhead and 1 test 
 // case fails
 
-fn poisonousPlants(p: &[i32]) -> i32 {
+fn poisonousPlants(plants: &[i32]) -> i32 {
 
-    let mut vector = p.to_vec() ;
-    let mut length = p.len() ;
-    let mut flag = false ;
+    let mut plants_array = plants.to_vec() ;
+    let mut survivors: Vec<i32> = Vec::with_capacity(plants.len()) ;
+    let mut length = plants.len() ;
+    let mut plants_died = false ;
     let mut days = 0 ;
     
-    while !vector.is_empty(){
-        let mut survivors: Vec<i32> = Vec::with_capacity(vector.len()) ;
-        survivors.push(vector[0]) ;
+    while !plants_array.is_empty(){
+        survivors.clear() ;
+        survivors.push(plants_array[0]) ;
 
-        for i in 0..length-1 {
-            if vector[i+1] > vector[i] {
-                flag = true ;
+        for current_index in 0..length-1 {
+            if plants_array[current_index+1] > plants_array[current_index] {
+                plants_died = true ;
             }
             else {
-                survivors.push(vector[i+1])
+                survivors.push(plants_array[current_index+1]) ;
             }
         }
         
-        if flag == false {
+        if plants_died == false {
             break ;
         }
 
-        vector = survivors ;
+        swap(&mut plants_array, &mut survivors) ;
 
-        length = vector.len() ;
+        length = plants_array.len() ;
 
         days += 1 ; 
-        flag = false ;
+        plants_died = false ;
     }
     
     return days;
