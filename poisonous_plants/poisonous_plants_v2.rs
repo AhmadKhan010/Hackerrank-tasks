@@ -10,11 +10,6 @@ use std::mem::swap;
  * The function accepts INTEGER_ARRAY p as parameter.
  */
 
-// 2) a slightly optimized approach in which tried to avoid .remove() function because it 
-// re allocates or shift the vector after removing the element but this approach has 
-// it's drawbacks as welly, like in a case where 99% plants survive, it copies all 
-// the 99% plants to survivor vector every time which becomes an overhead and 1 test 
-// case fails
 
 fn poisonousPlants(plants: &[i32]) -> i32 {
 

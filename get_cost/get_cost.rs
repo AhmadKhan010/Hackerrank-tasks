@@ -26,18 +26,10 @@ fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
     // building graph first
     let mut graph: Vec<Vec<(i32, i32)>> = vec![Vec::new(); (g_nodes + 1) as usize] ;
     
-    let mut from_node: i32;
-    let mut to_node: i32;
-    let mut weight: i32;
-    
     for edge_index in 0..g_from.len() {
-        from_node = g_from[edge_index] ;
-        to_node = g_to[edge_index] ;
-        weight = g_weight[edge_index] ;
-        
         // because graph is bi directional
-        graph[from_node as usize].push((to_node, weight)) ;
-        graph[to_node as usize].push((from_node, weight)) ;
+        graph[g_from[edge_index] as usize].push((g_to[edge_index], g_weight[edge_index])) ;
+        graph[g_to[edge_index] as usize].push((g_from[edge_index], g_weight[edge_index])) ;
     }
     
     let mut minimum_cost: Vec<i32> = vec![i32::MAX; (g_nodes+1) as usize] ;
@@ -56,7 +48,7 @@ fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
        
         for &(neighbour, edge_weight) in &graph[current_node as usize] {
             
-            difference = edge_weight - current_cost;
+/*            difference = edge_weight - current_cost;
             if difference > 0 {
                 new_cost = current_cost + difference ;
             }
@@ -64,7 +56,8 @@ fn getCost(g_nodes: i32, g_from: &[i32], g_to: &[i32], g_weight: &[i32]) {
                 new_cost = current_cost ;
 
             }
-            
+*/          
+            new_cost = current_cost.max(edge_weight) ;
             
             if new_cost < minimum_cost[neighbour as usize] {
                 minimum_cost[neighbour as usize] = new_cost;

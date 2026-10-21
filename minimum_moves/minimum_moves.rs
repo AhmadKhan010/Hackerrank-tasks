@@ -16,13 +16,17 @@ use std::collections::VecDeque;
  */
 
 fn minimumMoves(grid: &[String], startX: i32, startY: i32, goalX: i32, goalY: i32) -> i32 {
+    if startX == goalX && startY == goalY {
+        return 0;
+    }
     let grid_size = grid.len() ;
+    let grid_bytes: Vec<&[u8]> = grid.iter().map(|s| s.as_bytes()).collect();
     
-    let mut queue: VecDeque<(i32, i32, i32)> = VecDeque::new() ;
+    let mut queue = VecDeque::with_capacity(grid_size * grid_size);
+    queue.push_back((startX, startY, 0));
     
     let mut visited = vec![vec![false; grid_size]; grid_size] ;
     
-    queue.push_back((startX, startY, 0));
     visited[startX as usize][startY as usize] = true ;
     
     let possible_directions = [(-1,0), (1,0), (0,1), (0,-1)] ;
@@ -37,16 +41,16 @@ fn minimumMoves(grid: &[String], startX: i32, startY: i32, goalX: i32, goalY: i3
         
         (curr_X, curr_Y, moves) = queue.pop_front().unwrap() ;
         
-        if curr_X == goalX && curr_Y == goalY {
-            return moves;
-        }
-        
         for (delta_x, delta_y) in possible_directions {
             next_X = curr_X + delta_x ;
             next_Y = curr_Y + delta_y ;
             
-            while next_X >=0 && next_X < (grid_size as i32) && next_Y >= 0 && next_Y < (grid_size as i32) && grid[next_X as usize].as_bytes()[next_Y as usize] != b'X' {
+            while next_X >=0 && next_X < (grid_size as i32) && next_Y >= 0 && next_Y < (grid_size as i32) && grid_bytes[next_X as usize][next_Y as usize] != b'X' {
                 
+                if next_X == goalX && next_Y == goalY {
+                    return moves + 1;
+                }
+
                 if !visited[next_X as usize][next_Y as usize] {
                     visited[next_X as usize][next_Y as usize] = true ;
                     

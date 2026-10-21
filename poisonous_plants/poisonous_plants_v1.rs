@@ -19,14 +19,14 @@ fn poisonousPlants(plants: &[i32]) -> i32 {
 
     let mut plants_array = plants.to_vec() ;
     let mut length = plants.len() ;
-    let mut indices_to_remove: Vec<i32> = Vec::new() ;
+    let mut indices_to_remove: Vec<usize> = Vec::new() ;
     let mut plants_died = false ;
     let mut days = 0 ;
     
     while !plants_array.is_empty(){
         for current_index in 0..length-1 {
             if plants_array[current_index+1] > plants_array[current_index] {
-                indices_to_remove.push((current_index+1) as i32) ;
+                indices_to_remove.push(current_index+1) ;
                 plants_died = true ;
             }
         }
@@ -35,13 +35,11 @@ fn poisonousPlants(plants: &[i32]) -> i32 {
             break ;
         }
 
-        let remove_count = indices_to_remove.len() ;
-        for remove_idx in (0..remove_count).rev() {
-            plants_array.remove(indices_to_remove[remove_idx] as usize) ;
+        while let Some(idx) = indices_to_remove.pop() {
+            plants_array.remove(idx);
+            length-=1;
         }
 
-        length -= remove_count;
-        indices_to_remove.clear() ;  
         days += 1 ; 
         plants_died = false ;
     }

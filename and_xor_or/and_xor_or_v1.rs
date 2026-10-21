@@ -15,32 +15,40 @@ use std::io::{self, BufRead, Write};
 fn andXorOr(numbers: &[i32]) -> i32 {
     
     let length = numbers.len() ;
-
     let mut max_result = 0 ;
+
+    let mut smallest = 0 ;
+    let mut second_smallest = 0 ;
+    let mut current_value = 0 ;
+    let mut bitwise_and = 0 ;
+    let mut bitwise_or = 0 ;
+    let mut bitwise_xor = 0 ;
+    let mut xor_of_and_or = 0 ;
+    let mut current_expression_value = 0 ;
     
     for start_index in 0..length {
-        let mut smallest = numbers[start_index];
-        let mut second_smallest = i32::MAX ;
+        smallest = numbers[start_index];
+        second_smallest = i32::MAX ;
         
         for end_index in (start_index+1)..length {
-            let current_value = numbers[end_index] ;
+            current_value = numbers[end_index] ;
             
             if current_value < smallest {
                 second_smallest = smallest ;
-                smallest=current_value;
+                smallest = current_value ;
             }
             else if current_value < second_smallest && current_value > smallest {
                 second_smallest = current_value ;   
             } 
             
-            let bitwise_and = smallest & second_smallest ;
-            let bitwise_or = smallest | second_smallest ;
-            let xor_of_and_or = bitwise_and ^ bitwise_or ;
-            let bitwise_xor = smallest ^ second_smallest;
-            let current_expression_value = xor_of_and_or & bitwise_xor ;
+            bitwise_and = smallest & second_smallest ;
+            bitwise_or = smallest | second_smallest ;
+            bitwise_xor = smallest ^ second_smallest ;
+            xor_of_and_or = bitwise_and ^ bitwise_or ;
+            current_expression_value = xor_of_and_or & bitwise_xor ;
             
             if current_expression_value > max_result {
-                max_result = current_expression_value;
+                max_result = current_expression_value ;
             }
         }
     }

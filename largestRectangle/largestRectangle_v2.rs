@@ -23,7 +23,7 @@ fn largestRectangle(heights: &[i32]) -> i64 {
     
     for current_index in 0..length {
         current_height = heights[current_index] ;
-        left_bound_index = (current_index - 1) as i32;
+        left_bound_index = current_index as i32 - 1;
         
         while left_bound_index >= 0 && heights[left_bound_index as usize] >= current_height {
             left_bound_index -= 1 ;
@@ -38,9 +38,7 @@ fn largestRectangle(heights: &[i32]) -> i64 {
         
         area = count_of_buildings as i64 * current_height as i64;
         
-        if area > max_area {
-            max_area = area;
-        }
+        max_area = max_area.max(area);
     }
     
     return max_area;

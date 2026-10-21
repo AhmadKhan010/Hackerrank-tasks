@@ -23,22 +23,20 @@ fn largestRectangle(heights: &[i32]) -> i64 {
         min_height = heights[start_index];
         
         current_area = min_height as i64;
-        if current_area > max_area {
-            max_area = current_area;
-        }
+        max_area = max_area.max(current_area) ;
+
         
         width = 1;
         for end_index in (start_index + 1)..length {
             height = heights[end_index];
-            if height < min_height {
-                min_height = height;
-            }
+            min_height = min_height.min(height);
+
+
             width += 1;
             
             current_area = min_height as i64 * width as i64;
-            if current_area > max_area {
-                max_area = current_area;
-            }
+            max_area = max_area.max(current_area) ;
+
         }
     }
     return max_area;

@@ -15,37 +15,40 @@ use std::collections::HashMap ;
 fn cubeSum(cube_size: i32, operations: &[String]) -> Vec<i64> {
     
     let mut blocks: HashMap<(i32, i32, i32), i64> = HashMap::new() ;
-    let num_operations = operations.len() ;
     let mut results: Vec<i64> = Vec::new() ;
+
+    let mut parts: Vec<&str> = Vec::new() ;
+    let mut start_x: i32 = 0 ;
+    let mut start_y: i32 = 0 ;
+    let mut start_z: i32 = 0 ;
+    let mut end_x: i32 = 0 ;
+    let mut end_y: i32 = 0 ;
+    let mut end_z: i32 = 0 ;
+    let mut sum: i64 = 0 ;
     
-    for op_index in 0..num_operations {
-        let current_operation = &operations[op_index] ;
-        
-        let parts: Vec<&str> = current_operation.split_whitespace().collect() ;
+    for current_operation in operations {
+        parts = current_operation.split_whitespace().collect() ;
         
         if parts.is_empty(){
             continue;
         }
         
         if parts[0] == "UPDATE"{
-            let coord_x: i32 = parts[1].parse().unwrap() ;
-            let coord_y: i32 = parts[2].parse().unwrap() ;
-            let coord_z: i32 = parts[3].parse().unwrap() ;
-            let value: i64 = parts[4].parse().unwrap() ;
-            
-            blocks.insert((coord_x, coord_y, coord_z), value) ;
+            blocks.insert(
+                (parts[1].parse().unwrap(), parts[2].parse().unwrap(), parts[3].parse().unwrap()),
+                parts[4].parse().unwrap(),
+            ) ;
         }
         else if parts[0] == "QUERY" {
-            let start_x: i32 = parts[1].parse().unwrap() ;
-            let start_y: i32 = parts[2].parse().unwrap() ;
-            let start_z: i32 = parts[3].parse().unwrap() ;
-            let end_x: i32 = parts[4].parse().unwrap() ;
-            let end_y: i32 = parts[5].parse().unwrap() ;
-            let end_z: i32 = parts[6].parse().unwrap() ;
+            start_x = parts[1].parse().unwrap() ;
+            start_y = parts[2].parse().unwrap() ;
+            start_z = parts[3].parse().unwrap() ;
+            end_x = parts[4].parse().unwrap() ;
+            end_y = parts[5].parse().unwrap() ;
+            end_z = parts[6].parse().unwrap() ;
             
-            let mut sum: i64 = 0 ;
-            for (block, value) in &blocks {
-                let &(coord_x, coord_y, coord_z) = block ;
+            sum = 0 ;
+            for (&(coord_x, coord_y, coord_z), value) in &blocks {
                 if (coord_x >= start_x) && (coord_x <= end_x) && (coord_y >= start_y) && (coord_y <= end_y) && (coord_z >= start_z) && (coord_z <= end_z){
                     sum = sum + *value;
                 }
